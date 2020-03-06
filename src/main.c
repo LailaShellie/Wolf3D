@@ -3,12 +3,12 @@
 
 int worldMap[24][24]=
         {
-                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-                {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+                {1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+                {3,0,0,0,0,2,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2},
+                {2,0,0,0,0,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2},
+                {2,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2},
+                {2,0,0,0,0,0,1,1,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+                {1,1,2,1,2,1,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
                 {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
                 {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
                 {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
@@ -29,11 +29,11 @@ int worldMap[24][24]=
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
         };
 
-void        draw_line(t_wolf3d *wlf, int s, int e, int x)
+void        draw_line(t_wolf3d *wlf, int s, int e, int x, int color)
 {
     while (s <= e)
     {
-        wlf->img->data[x + s * wlf->img->size_line / 4] = 255;
+        wlf->img->data[x + s * wlf->img->size_line / 4] = color;
         ++s;
     }
 }
@@ -47,10 +47,12 @@ int main()
 	ft_bzero(&wlf, sizeof(t_wolf3d));
 	wlf.map.wx = 24;
 	wlf.map.wy = 24;
-	wlf.player.pos.x = 1;
+	wlf.player.pos.x = 10;
     wlf.player.pos.y = 1;
-    wlf.player.dir.x = 1;
+    wlf.player.dir.x = -1;
     wlf.player.dir.y = 0;
+    wlf.player.plane.x = 0;
+    wlf.player.plane.y = 1;
 	init_mlx(&wlf);
 	t_vect2d	ray;
 	double		cam_x;
@@ -66,8 +68,6 @@ int main()
 
 	int         step_x;
 	int         step_y;
-	int         hit = 0;
-	int         side = 0;
 
 	double      perpWall;
 
@@ -107,6 +107,8 @@ int main()
             side_y = (map_x + 1.0 - wlf.player.pos.y) * delta_y;
         }
 
+        int         hit = 0;
+        int         side = 0;
         while (hit == 0)
         {
             if (side_x < side_y)
@@ -138,7 +140,8 @@ int main()
             start = 0;
         if (end >= H)
             end = H - 1;
-        draw_line(&wlf, start, end, x);
+        int color = worldMap[map_x][map_y] % 2 ? 255 : 0xff0000;
+        draw_line(&wlf, start, end, x, color);
         ++x;
 	}
 	mlx_put_image_to_window(wlf.mlx_ptr, wlf.win_ptr, wlf.img->img_ptr, 0, 0);
