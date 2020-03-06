@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.14)
 project(Wolf3D C)
 
 set(CMAKE_C_STANDARD 11)
@@ -95,4 +95,5 @@ add_executable(Wolf3D
         mlx/mlx_shaders.c
         mlx/mlx_xpm.c
         src/init_mlx.c
-        src/main.c)
+        src/main.c
+        src/vect2d.c)

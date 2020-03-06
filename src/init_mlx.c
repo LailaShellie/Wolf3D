@@ -34,7 +34,7 @@ int			init_mlx(t_wolf3d *wlf)
 		return (ERR);
 	if (!(wlf->img->img_ptr = mlx_new_image(wlf->mlx_ptr, W, H)))
 		return (ERR);
-	if (!(wlf->img->data = mlx_get_data_addr(wlf->img->img_ptr,
+	if (!(wlf->img->data = (int *)mlx_get_data_addr(wlf->img->img_ptr,
 			&wlf->img->bpp, &wlf->img->size_line, &wlf->img->endian)))
 		return (ERR);
 	return (1);

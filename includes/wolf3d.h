@@ -20,7 +20,7 @@ typedef struct			s_vect2d
 typedef struct			s_img
 {
 	void				*img_ptr;
-	char				*data;
+    int 				*data;
 	int					bpp;
 	int					size_line;
 	int					endian;
