@@ -1,4 +1,4 @@
-SRC = init_mlx.c main.c
+SRC = init.c hooks.c main.c vect2d.c render.c
 
 OBJ_DIR = ./objects
 SRC_DIR = ./src
@@ -6,7 +6,7 @@ HDR_DIR = ./includes
 LIBFT_HDR_DIR = ./libft
 MLX_HDR_DIR = ./mlx
 OBJ = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
-HDR = ./includes/wolf3d.h
+HDR = ./includes/wolf3d.h ./includes/keys.h
 LIB = libft/libft.a
 MLX = mlx/lmlx.a
 NAME = wolf3d

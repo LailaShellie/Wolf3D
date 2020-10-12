@@ -1,150 +1,119 @@
 
 #include "../includes/wolf3d.h"
 
-int worldMap[24][24]=
-        {
-                {1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-                {3,0,0,0,0,2,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2},
-                {2,0,0,0,0,1,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2},
-                {2,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2},
-                {2,0,0,0,0,0,1,1,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-                {1,1,2,1,2,1,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-                {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-        };
-
-void        draw_line(t_wolf3d *wlf, int s, int e, int x, int color)
-{
-    while (s <= e)
-    {
-        wlf->img->data[x + s * wlf->img->size_line / 4] = color;
-        ++s;
-    }
-}
+//void		render1(t_wolf3d *wlf)
+//{
+//	double		cam_x;
+//	int 		x = -1;
+//	double		side_x = 0;
+//	double		side_y = 0;
+//
+//	ft_bzero(wlf->img->data, W * H * 4);
+//	while (++x < W)
+//	{
+//		wlf->ray.map_x = (int)wlf->pos.x;
+//		wlf->ray.map_y = (int)wlf->pos.y;
+//
+//		cam_x = 2.0 * x / W - 1.0;
+//		wlf->ray.dir.x = wlf->dir.x + wlf->plane.x * cam_x;
+//		wlf->ray.dir.y = wlf->dir.y + wlf->plane.y * cam_x;
+//
+//		wlf->ray.delta_x = fabs(1 / wlf->ray.dir.x);
+//		wlf->ray.delta_y = fabs(1 / wlf->ray.dir.y);
+//
+//		if (wlf->ray.dir.x < 0)
+//		{
+//			wlf->ray.step_x = -1;
+//			side_x = (wlf->pos.x - wlf->ray.map_x) * wlf->ray.delta_x;
+//		}
+//		else
+//		{
+//			wlf->ray.step_x = 1;
+//			side_x = (wlf->ray.map_x + 1.0 - wlf->pos.x) * wlf->ray.delta_x;
+//		}
+//
+//		if (wlf->ray.dir.y < 0)
+//		{
+//			wlf->ray.step_y = -1;
+//			side_y = (wlf->pos.y - wlf->ray.map_y) * wlf->ray.delta_y;
+//		}
+//		else
+//		{
+//			wlf->ray.step_y = 1;
+//			side_y = (wlf->ray.map_y + 1.0 - wlf->pos.y) * wlf->ray.delta_y;
+//		}
+//		int         hit = 0;
+//		int         side = -1;
+//		while (hit == 0 && wlf->ray.map_x < 23 && wlf->ray.map_y < 23 && wlf->ray.map_x > 0 && wlf->ray.map_y > 0)
+//		{
+//			if (side_x < side_y)
+//			{
+//				side_x += wlf->ray.delta_x;
+//				wlf->ray.map_x += wlf->ray.step_x;
+//				side = 0;
+//			}
+//			else
+//			{
+//				side_y += wlf->ray.delta_y;
+//				wlf->ray.map_y += wlf->ray.step_y;
+//				side = 1;
+//			}
+//			hit = worldMap[wlf->ray.map_y][wlf->ray.map_x];
+//		}
+//		if (hit == 0)
+//			continue;
+//		hit = (hit + 1) % TEX_NUM;
+//		if (side == 0)
+//			wlf->ray.dist = (wlf->ray.map_x - wlf->pos.x + (1.0 - wlf->ray.step_x) / 2.0) / wlf->ray.dir.x;
+//		else
+//			wlf->ray.dist = (wlf->ray.map_y - wlf->pos.y + (1.0 - wlf->ray.step_y) / 2.0) / wlf->ray.dir.y;
+//		wlf->ray.line = (int)(H / wlf->ray.dist);
+//
+//		int start, end;
+//
+//		start = -wlf->ray.line / 2 + H / 2;
+//		end = wlf->ray.line / 2 + H / 2;
+//		if (start < 0)
+//			start = 0;
+//		if (end >= H)
+//			end = H - 1;
+//		double wallx = 0;
+//		if (side == 0)
+//			wallx = wlf->pos.y + wlf->ray.dist * wlf->ray.dir.y;
+//		else
+//			wallx = wlf->pos.x + wlf->ray.dist * wlf->ray.dir.x;
+//		wallx -= floor(wallx);
+//		printf("%lf\n", wallx);
+//		int texx = (int)(wallx * (double)wlf->text[hit].width);
+//		if(side == 0 && wlf->ray.dir.x > 0)
+//			texx = wlf->text[hit].width - texx - 1;
+//		if(side == 1 && wlf->ray.dir.y < 0)
+//			texx = wlf->text[hit].width - texx - 1;
+//		printf("%d\n",texx);
+//		int texy;
+//		double step = 1.0 * wlf->text[hit].height / wlf->ray.line;
+//		double texPos = (start - H / 2.0 + wlf->ray.line / 2.0) * step;
+//
+//		while (start <= end)
+//		{
+//			if ((int)texPos >= wlf->text[hit].height)
+//				texy = (int)texPos % wlf->text[hit].height - 1;
+//			else
+//				texy = (int)texPos;
+//			wlf->img->data[x + start * wlf->img->size_line / 4] = wlf->text[hit].buf[texx + texy * wlf->text[hit].height];
+//			texPos += step;
+//			++start;
+//		}
+//	}
+//	mlx_put_image_to_window(wlf->mlx_ptr, wlf->win_ptr, wlf->img->img_ptr, 0, 0);
+//}
 
 int main()
 {
-
-
 	t_wolf3d wlf;
 
-	ft_bzero(&wlf, sizeof(t_wolf3d));
-	wlf.map.wx = 24;
-	wlf.map.wy = 24;
-	wlf.player.pos.x = 10;
-    wlf.player.pos.y = 1;
-    wlf.player.dir.x = -1;
-    wlf.player.dir.y = 0;
-    wlf.player.plane.x = 0;
-    wlf.player.plane.y = 1;
-	init_mlx(&wlf);
-	t_vect2d	ray;
-	double		cam_x;
-	int 		x = 0;
-
-	int 		map_x;
-	int 		map_y;
-
-	double		side_x;
-	double		side_y;
-	double		delta_x;
-	double		delta_y;
-
-	int         step_x;
-	int         step_y;
-
-	double      perpWall;
-
-	int         line;
-
-	while (x < W)
-	{
-		map_x = (int)wlf.player.pos.x;
-		map_y = (int)wlf.player.pos.y;
-
-		delta_x = fabs(1 / wlf.player.dir.x);
-		delta_y = fabs(1 / wlf.player.dir.y);
-
-		cam_x = 2.0 * x / (double)W - 1;
-		ray.x = wlf.player.dir.x + wlf.player.plane.x * cam_x;
-		ray.y = wlf.player.dir.y + wlf.player.plane.y * cam_x;
-
-		if (wlf.player.dir.x < 0)
-        {
-            step_x = -1;
-            side_x = (wlf.player.pos.x - map_x) * delta_x;
-        }
-		else
-        {
-		    step_x = 1;
-		    side_x = (map_x + 1.0 - wlf.player.pos.x) * delta_x;
-        }
-
-        if (wlf.player.dir.y < 0)
-        {
-            step_y = -1;
-            side_y = (wlf.player.pos.y - map_y) * delta_y;
-        }
-        else
-        {
-            step_y = 1;
-            side_y = (map_x + 1.0 - wlf.player.pos.y) * delta_y;
-        }
-
-        int         hit = 0;
-        int         side = 0;
-        while (hit == 0)
-        {
-            if (side_x < side_y)
-            {
-                side_x += delta_x;
-                map_x += step_x;
-                side = 0;
-            }
-            else
-            {
-                side_y += delta_y;
-                map_y += step_y;
-                side = 1;
-            }
-            if (worldMap[map_x][map_y] > 0)
-                hit = 1;
-        }
-        if (side == 0)
-            perpWall = (map_x - wlf.player.pos.x + (1.0 - step_x) / 2) / wlf.player.dir.x;
-        else
-            perpWall = (map_y - wlf.player.pos.y + (1.0 - step_y) / 2) / wlf.player.dir.y;
-        line = (int)(H / perpWall);
-
-        int start, end;
-
-        start = -line / 2 + H / 2;
-        end = line / 2 + H / 2;
-        if (start < 0)
-            start = 0;
-        if (end >= H)
-            end = H - 1;
-        int color = worldMap[map_x][map_y] % 2 ? 255 : 0xff0000;
-        draw_line(&wlf, start, end, x, color);
-        ++x;
-	}
-	mlx_put_image_to_window(wlf.mlx_ptr, wlf.win_ptr, wlf.img->img_ptr, 0, 0);
+	init(&wlf);
+	render(&wlf);
 	hooks(&wlf);
 	return (0);
 }

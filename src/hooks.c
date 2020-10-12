@@ -12,6 +12,36 @@
 
 # include "wolf3d.h"
 
+int 		keyhooks(int key, t_wolf3d *wlf)
+{
+	printf("%d - key\n", key);
+	if (key == KEY_UP)
+	{
+		wlf->pos.x += wlf->dir.x * 0.1;
+		wlf->pos.y += wlf->dir.y * 0.1;
+		render(wlf);
+	}
+	if (key == KEY_DOWN)
+	{
+		wlf->pos.x -= wlf->dir.x * 0.1;
+		wlf->pos.y -= wlf->dir.y * 0.1;
+		render(wlf);
+	}
+	if (key == KEY_LEFT)
+	{
+		wlf->dir = rot_vect2d(&wlf->dir, -0.1);
+		wlf->plane = rot_vect2d(&wlf->plane, -0.1);
+		render(wlf);
+	}
+	if (key == KEY_RIGHT)
+	{
+		wlf->dir = rot_vect2d(&wlf->dir, 0.1);
+		wlf->plane = rot_vect2d(&wlf->plane, 0.1);
+		render(wlf);
+	}
+	return (1);
+}
+
 int			ft_close(t_wolf3d *wlf)
 {
 	(void)wlf;
@@ -21,21 +51,6 @@ int			ft_close(t_wolf3d *wlf)
 void		hooks(t_wolf3d *wlf)
 {
 	mlx_hook(wlf->win_ptr, 17, 0, ft_close, wlf);
+	mlx_hook(wlf->win_ptr, 2, 0, keyhooks, wlf);
 	mlx_loop(wlf->mlx_ptr);
-}
-
-int			init_mlx(t_wolf3d *wlf)
-{
-	if (!(wlf->mlx_ptr = mlx_init()))
-		return (ERR);
-	if (!(wlf->win_ptr = mlx_new_window(wlf->mlx_ptr, W, H, "Wolf3D")))
-		return (ERR);
-	if (!(wlf->img = ft_memalloc(sizeof(t_img))))
-		return (ERR);
-	if (!(wlf->img->img_ptr = mlx_new_image(wlf->mlx_ptr, W, H)))
-		return (ERR);
-	if (!(wlf->img->data = (int *)mlx_get_data_addr(wlf->img->img_ptr,
-			&wlf->img->bpp, &wlf->img->size_line, &wlf->img->endian)))
-		return (ERR);
-	return (1);
 }
