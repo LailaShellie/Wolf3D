@@ -2,7 +2,7 @@
 // Created by Ivan on 15/03/2020.
 //
 
-#include "wolf3d.h"
+#include "../includes/wolf3d.h"
 
 int			init_mlx(t_wolf3d *wlf)
 {
@@ -31,7 +31,6 @@ int 		init_wlf(t_wolf3d *wlf)
 	wlf->plane = cross_vect3d(&wlf->dir);
 	norm_vect2d(&wlf->plane);
 	norm_vect2d(&wlf->dir);
-	init_mlx(wlf);
 	norm_vect2d(&wlf->dir);
 	return (NO_ERR);
 }

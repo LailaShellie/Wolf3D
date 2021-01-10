@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "wolf3d.h"
+#include "../includes/wolf3d.h"
 
 int 		keyhooks(int key, t_wolf3d *wlf)
 {
@@ -30,15 +30,17 @@ int 		keyhooks(int key, t_wolf3d *wlf)
 	if (key == KEY_LEFT)
 	{
 		wlf->dir = rot_vect2d(&wlf->dir, -0.1);
-		wlf->plane = rot_vect2d(&wlf->plane, -0.1);
+//		wlf->plane = rot_vect2d(&wlf->plane, -0.1);
 		render(wlf);
 	}
 	if (key == KEY_RIGHT)
 	{
 		wlf->dir = rot_vect2d(&wlf->dir, 0.1);
-		wlf->plane = rot_vect2d(&wlf->plane, 0.1);
+//		wlf->plane = rot_vect2d(&wlf->plane, 0.1);
 		render(wlf);
 	}
+	if (key == KEY_ESC)
+		exit(0);
 	return (1);
 }
 

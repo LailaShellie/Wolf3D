@@ -12,6 +12,7 @@ MLX = mlx/lmlx.a
 NAME = wolf3d
 
 all: libs $(NAME)
+	./$(NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HDR)
 	@gcc -g3  -I $(HDR_DIR) -I $(LIBFT_HDR_DIR) -I $(MLX_HDR_DIR) -o $@ -c $<

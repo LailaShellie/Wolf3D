@@ -10,6 +10,8 @@
 # include <unistd.h>
 # include <fcntl.h>
 
+# include "../mlx/mlx.h"
+
 # define ERR 0
 # define NO_ERR 1
 # define W 1200
@@ -25,7 +27,10 @@
 # define X_SIDE 0
 # define Y_SIDE 1
 
-static int worldMap[24][24]=
+# define X_MAP 24
+# define Y_MAP 24
+
+static int worldMap[Y_MAP][X_MAP]=
 		{
 //				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 //				{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
