@@ -1,3 +1,5 @@
 .idea/*
 objects/*
 cmake-build-debug/*
+*.o
+
