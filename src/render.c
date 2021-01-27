@@ -72,7 +72,7 @@ void		cast_ray(t_wolf3d *wlf, t_ray *ray)
 			* ray->delta_y : (wlf->pos.y - ray->map_y) * ray->delta_y;
 	ray->step_x = ray->dir.x >= 0 ? 1 : -1;
 	ray->step_y = ray->dir.y >= 0 ? 1 : -1;
-	while (ray->hit == 0 && ray->map_x > 0 && ray->map_x < X_MAP - 1 && ray->map_y > 0 && ray->map_y < Y_MAP - 1)
+	while (ray->hit == 0 && ray->map_x > 0 && ray->map_x < wlf->map.width - 1 && ray->map_y > 0 && ray->map_y < wlf->map.heigth - 1)
 	{
 //		if (a == W/2)
 //			printf("size_x=%lf size_y=%lf\n", side_x, side_y);
@@ -89,7 +89,8 @@ void		cast_ray(t_wolf3d *wlf, t_ray *ray)
 			ray->side = Y_SIDE;
 			ray->map_y += ray->step_y;
 		}
-		ray->hit = worldMap[ray->map_y][ray->map_x];
+//		ray->hit = worldMap[ray->map_y][ray->map_x];
+		ray->hit = wlf->map.map[ray->map_y][ray->map_x];
 	}
 	if (ray->hit == 0)
 		return ;

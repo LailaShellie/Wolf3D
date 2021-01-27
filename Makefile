@@ -1,4 +1,4 @@
-SRC = init.c hooks.c main.c vect2d.c render.c
+SRC = init.c hooks.c main.c vect2d.c render.c map.c
 
 OBJ_DIR = ./objects
 SRC_DIR = ./src
@@ -12,7 +12,7 @@ MLX = mlx/lmlx.a
 NAME = wolf3d
 
 all: libs $(NAME)
-	./$(NAME)
+	./$(NAME) text.txt
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HDR)
 	@gcc -g3  -I $(HDR_DIR) -I $(LIBFT_HDR_DIR) -I $(MLX_HDR_DIR) -o $@ -c $<
