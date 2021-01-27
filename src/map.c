@@ -6,6 +6,7 @@
 
 #define EMPTY 0
 #define OUT -1
+#define MIN_MAP_SIZE 3
 
 //отладочная функция
 void	print_map(t_map *map)
@@ -49,7 +50,6 @@ int		read_file_to_lists(int fd, int *height, int *width, t_list *begin)
 		if (!(new = (t_list *)ft_memalloc(sizeof(t_list))))
 		{
 			free(str);
-			ft_lstdel(&begin->next, &del);
 			return (ERR);
 		}
 		new->content = str;
@@ -85,6 +85,7 @@ int		create_map_from_list(t_map *map, t_list *lst)
 	return (NO_ERR);
 }
 
+// по-хорошему надо положение персонажа считывать с карты
 int		validate_map(int **map, int heigth, int width)
 {
 	int y;
@@ -117,14 +118,15 @@ int		file_to_map(char *file, t_map *map)
 
 	if ((fd = open(file, O_RDWR)) < 0)
 		return (ERR);
-	if (!(read_file_to_lists(fd, &map->heigth, &map->width, lst))) //читаем в список строк
-		return (ERR);
-	close(fd);
-	if (!(create_map_from_list(map, lst->next))) //создаем массив интов для прямоугольной карты
+	if (!(read_file_to_lists(fd, &map->heigth, &map->width, lst)) //читаем в список строк
+	|| map->heigth < MIN_MAP_SIZE || map->width < MIN_MAP_SIZE
+	|| !(create_map_from_list(map, lst->next))) //создаем массив интов для прямоугольной карты
 	{
+		close(fd);
 		ft_lstdel(&lst->next, &del);
 		return (ERR);
 	}
+	close(fd);
 	ft_lstdel(&lst->next, &del);
 	if (!(validate_map(map->map, map->heigth, map->width))) //валидируем контур
 		return (ERR);
