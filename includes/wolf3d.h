@@ -130,6 +130,9 @@ typedef struct			s_map
 	int 				**map;
 	int 				width;
 	int 				heigth;
+	int					has_person;
+	t_vect2d			pos;
+	t_vect2d			dir;
 }						t_map;
 
 typedef struct			s_wolf3d
@@ -158,5 +161,6 @@ void		hooks(t_wolf3d *wlf);
 void		render(t_wolf3d *wlf);
 
 int			file_to_map(char *file, t_map *map);
+int			validate_map(t_map *map);
 
 #endif

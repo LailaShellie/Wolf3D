@@ -85,32 +85,6 @@ int		create_map_from_list(t_map *map, t_list *lst)
 	return (NO_ERR);
 }
 
-// по-хорошему надо положение персонажа считывать с карты
-int		validate_map(int **map, int heigth, int width)
-{
-	int y;
-	int x;
-
-	y = -1;
-	while (++y < heigth)
-	{
-		x = -1;
-		while (++x < width)
-		{
-			if (map[y][x] != EMPTY)
-				continue;
-			if (x == 0 || x == width - 1 || y == 0 || y == heigth - 1)
-				return (ERR);
-			if (map[y][x + 1] == OUT || map[y][x - 1] == OUT
-			|| map[y + 1][x] == OUT || map[y - 1][x] == OUT
-			|| map[y + 1][x + 1] == OUT || map[y + 1][x - 1] == OUT
-			|| map[y - 1][x + 1] == OUT || map[y - 1][x - 1] == OUT)
-				return (ERR);
-		}
-	}
-	return (NO_ERR);
-}
-
 int		file_to_map(char *file, t_map *map)
 {
 	int fd;
@@ -128,7 +102,7 @@ int		file_to_map(char *file, t_map *map)
 	}
 	close(fd);
 	ft_lstdel(&lst->next, &del);
-	if (!(validate_map(map->map, map->heigth, map->width))) //валидируем контур
+	if (!(validate_map(map)) || !map->has_person) //валидируем контур
 		return (ERR);
 	print_map(map);
 	return (NO_ERR);

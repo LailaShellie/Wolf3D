@@ -1,4 +1,4 @@
-SRC = init.c hooks.c main.c vect2d.c render.c map.c
+SRC = init.c hooks.c main.c vect2d.c render.c map.c validation.c
 
 OBJ_DIR = ./objects
 SRC_DIR = ./src

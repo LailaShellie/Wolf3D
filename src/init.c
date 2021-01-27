@@ -22,11 +22,12 @@ int			init_mlx(t_wolf3d *wlf)
 
 int 		init_wlf(t_wolf3d *wlf)
 {
-	ft_bzero(wlf, sizeof(t_wolf3d));
-	wlf->pos.x = 2;
-	wlf->pos.y = 2;
-	wlf->dir.x = 1;
-	wlf->dir.y = 1;
+//	wlf->pos.x = 2;
+//	wlf->pos.y = 2;
+//	wlf->dir.x = 1;
+//	wlf->dir.y = 1;
+	wlf->pos = wlf->map.pos;
+	wlf->dir = wlf->map.dir;
 	norm_vect2d(&wlf->dir);
 	wlf->plane = cross_vect3d(&wlf->dir);
 	norm_vect2d(&wlf->plane);

@@ -126,9 +126,10 @@ int main(int argc, char **argv)
 
 	if (argc != 2)
 		return (ft_exit(&wlf, ARG_ERROR));
-	init(&wlf);
+	ft_bzero(&wlf, sizeof(t_wolf3d));
 	if (!(file_to_map(argv[1], &wlf.map)))
 		return (ft_exit(&wlf, MAP_ERROR));
+	init(&wlf);
 	render(&wlf);
 	hooks(&wlf);
 	return (0);
