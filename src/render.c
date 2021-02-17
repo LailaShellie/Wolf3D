@@ -106,6 +106,47 @@ void		player_to_str(t_wolf3d *wlf){
 }
 
 
+void		render_floor(t_wolf3d *wlf) {
+	for(int y = 0; y < H / 2 ; y++) {
+		float rayDirX0 = wlf->dir.x + wlf->dir.y;
+		float rayDirY0 = wlf->dir.y - wlf->dir.x;
+		float rayDirX1 = wlf->dir.x - wlf->dir.y;
+		float rayDirY1 = wlf->dir.y + wlf->dir.x;
+
+		int p = H / 2 - y;
+		float posZ = 0.5 * H;
+		float rowDistance = posZ / p;
+		float floorStepX = rowDistance * (rayDirX1 - rayDirX0) / W;
+		float floorStepY = rowDistance * (rayDirY1 - rayDirY0) / W;
+		float floorX = wlf->pos.x + rowDistance * rayDirX0;
+		float floorY = wlf->pos.y + rowDistance * rayDirY0;
+
+
+		for(int x = 0; x < W; ++x) {
+			int cellX = (int)(floorX);
+			int cellY = (int)(floorY);
+
+			int tx = (int)(wlf->text[0].width * (floorX - cellX)) & (wlf->text[0].width - 1);
+			int ty = (int)(wlf->text[0].height * (floorY - cellY)) & (wlf->text[0].height - 1);
+
+			floorX += floorStepX;
+			floorY += floorStepY;
+
+//			int floorTexture = 3;
+//			int ceilingTexture = 6;
+			int color;
+
+			color = wlf->text[2].buf[wlf->text[2].width * ty + tx];
+			color = (color >> 1) & 8355711; // make a bit darker
+			wlf->img->data[y * W + x] = color;
+
+			color = wlf->text[3].buf[wlf->text[3].width * ty + tx];
+			color = (color >> 1) & 8355711; // make a bit darker
+			wlf->img->data[(H - y - 1) * W + x] = color;
+		}
+	}
+}
+
 
 void		render(t_wolf3d *wlf)
 {
@@ -115,6 +156,7 @@ void		render(t_wolf3d *wlf)
 
 	wlf->x = -1;
 	ft_bzero(wlf->img->data, W * H * 4);
+	render_floor(wlf);
 	while (++wlf->x < W)
 	{
 		ft_bzero(&ray, sizeof(t_ray));
@@ -128,6 +170,8 @@ void		render(t_wolf3d *wlf)
 		cast_ray(wlf , &ray);
 		a++;
 	}
+
 	mlx_put_image_to_window(wlf->mlx_ptr, wlf->win_ptr, wlf->img->img_ptr, 0, 0);
 	player_to_str(wlf);
 }
+
