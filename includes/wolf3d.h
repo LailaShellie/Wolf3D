@@ -23,6 +23,7 @@
 # define TEXT2 "textures/purplestone.xpm"
 # define TEXT3 "textures/redbrick.xpm"
 # define TEXT4 "textures/wood.xpm"
+//# define TEXT5 "pics/bat_enter.xpm"
 # define TEXT5 "textures/Ivan.xpm"
 
 # define X_SIDE 0

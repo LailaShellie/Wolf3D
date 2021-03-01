@@ -1,6 +1,14 @@
-//
-// Created by Suzette Soraka on 1/27/21.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validation.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssoraka <ssoraka@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/07 14:28:14 by ssoraka           #+#    #+#             */
+/*   Updated: 2019/04/16 18:47:16 by ssoraka          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/wolf3d.h"
 
@@ -12,7 +20,7 @@ int		valid_position(t_map *map, int y, int x)
 	int pos;
 
 	pos = map->map[y][x];
-	if (pos >= -1 && pos <= 5)
+	if (pos >= -1 && pos <= TEX_NUM)
 		return (NO_ERR);
 	pos += '0';
 	if (ft_strchr("NSWE", pos) && !map->has_person)

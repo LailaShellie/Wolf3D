@@ -1,16 +1,24 @@
-//
-// Created by Ivan on 15/03/2020.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: odrinkwa <odrinkwa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/22 13:28:43 by lshellie          #+#    #+#             */
+/*   Updated: 2020/02/29 15:50:00 by odrinkwa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/wolf3d.h"
 
-int			init_mlx(t_wolf3d *wlf)
+int		init_mlx(t_wolf3d *wlf)
 {
 	if (!(wlf->mlx_ptr = mlx_init()))
 		return (ERR);
 	if (!(wlf->win_ptr = mlx_new_window(wlf->mlx_ptr, W, H, "Wolf3D")))
 		return (ERR);
-	if (!(wlf->img = ft_memalloc(sizeof(t_img))))
+	if (!(wlf->img = (t_img *)ft_memalloc(sizeof(t_img))))
 		return (ERR);
 	if (!(wlf->img->img_ptr = mlx_new_image(wlf->mlx_ptr, W, H)))
 		return (ERR);
@@ -20,12 +28,8 @@ int			init_mlx(t_wolf3d *wlf)
 	return (NO_ERR);
 }
 
-int 		init_wlf(t_wolf3d *wlf)
+int		init_wlf(t_wolf3d *wlf)
 {
-//	wlf->pos.x = 2;
-//	wlf->pos.y = 2;
-//	wlf->dir.x = 1;
-//	wlf->dir.y = 1;
 	wlf->pos = wlf->map.pos;
 	wlf->dir = wlf->map.dir;
 	norm_vect2d(&wlf->dir);
@@ -36,39 +40,46 @@ int 		init_wlf(t_wolf3d *wlf)
 	return (NO_ERR);
 }
 
-int 		init_one_text(t_wolf3d *wlf, int id, char *file)
+int		init_one_text(t_wolf3d *wlf, t_texture *text, char *file)
 {
-	if (!(wlf->text[id].tex_ptr = mlx_xpm_file_to_image(wlf->mlx_ptr, file, &wlf->text[id].width, &wlf->text[id].height)))
+	if (!(text->tex_ptr = mlx_xpm_file_to_image(
+			wlf->mlx_ptr,
+			file,
+			&text->width,
+			&text->height)))
 		return (ERR);
-	if (!(wlf->text[id].buf = (int *)mlx_get_data_addr(wlf->text[id].tex_ptr,
-			&wlf->text[id].bpp, &wlf->text[id].size_line, &wlf->text[id].endian)))
+	if (!(text->buf = (int *)mlx_get_data_addr(
+			text->tex_ptr,
+			&text->bpp,
+			&text->size_line,
+			&text->endian)))
 		return (ERR);
 	return (NO_ERR);
 }
 
-int 		init_textures(t_wolf3d *wlf)
+int		init_textures(t_wolf3d *wlf)
 {
 	if (!(wlf->text = ft_memalloc(sizeof(t_texture) * TEX_NUM)))
 		return (ERR);
-	if (ERR == init_one_text(wlf, 0, TEXT1))
+	if (ERR == init_one_text(wlf, wlf->text, TEXT1))
 		return (ERR);
-	if (ERR == init_one_text(wlf, 1, TEXT2))
+	if (ERR == init_one_text(wlf, wlf->text + 1, TEXT2))
 		return (ERR);
-	if (ERR == init_one_text(wlf, 2, TEXT3))
+	if (ERR == init_one_text(wlf, wlf->text + 2, TEXT3))
 		return (ERR);
-	if (ERR == init_one_text(wlf, 3, TEXT4))
+	if (ERR == init_one_text(wlf, wlf->text + 3, TEXT4))
 		return (ERR);
-	if (ERR == init_one_text(wlf, 4, TEXT5))
+	if (ERR == init_one_text(wlf, wlf->text + 4, TEXT5))
 		return (ERR);
 	return (NO_ERR);
 }
 
-void 	init(t_wolf3d *wlf)
+void	init(t_wolf3d *wlf)
 {
 	if (ERR == init_wlf(wlf))
-		exit (0);
+		exit(0);
 	if (ERR == init_mlx(wlf))
-		exit (0);
+		exit(0);
 	if (ERR == init_textures(wlf))
-		exit (0);
+		exit(0);
 }

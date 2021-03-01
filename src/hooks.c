@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_mlx.c                                         :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: odrinkwa <odrinkwa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -19,7 +19,6 @@
 #define FORWARD 1
 #define BACKWARD -1
 
-//дублируется в файле map.c
 #define EMPTY 0
 
 int			ft_close(t_wolf3d *wlf)
@@ -36,7 +35,7 @@ int			set_new_pos(t_vect2d *old, t_vect2d *dir, int move, t_map *map)
 	new_p.y = old->y + dir->y * STEP * move;
 	if (new_p.x >= 0 && new_p.x < map->width
 	&& new_p.y >= 0 && new_p.y < map->heigth
-	&& map->map[(int) new_p.y][(int) new_p.x] == EMPTY)
+	&& map->map[(int)new_p.y][(int)new_p.x] == EMPTY)
 	{
 		*old = new_p;
 		return (TRUE);
@@ -44,23 +43,21 @@ int			set_new_pos(t_vect2d *old, t_vect2d *dir, int move, t_map *map)
 	return (FALSE);
 }
 
-int 		keyhooks(int key, t_wolf3d *wlf)
+int			keyhooks(int key, t_wolf3d *wlf)
 {
-	printf("%d - key\n", key);
 	if (key == KEY_UP && set_new_pos(&wlf->pos, &wlf->dir, FORWARD, &wlf->map))
 		render(wlf);
-	if (key == KEY_DOWN && set_new_pos(&wlf->pos, &wlf->dir, BACKWARD, &wlf->map))
+	if (key == KEY_DOWN
+	&& set_new_pos(&wlf->pos, &wlf->dir, BACKWARD, &wlf->map))
 		render(wlf);
 	if (key == KEY_LEFT)
 	{
 		wlf->dir = rot_vect2d(&wlf->dir, -0.1);
-//		wlf->plane = rot_vect2d(&wlf->plane, -0.1);
 		render(wlf);
 	}
 	if (key == KEY_RIGHT)
 	{
 		wlf->dir = rot_vect2d(&wlf->dir, 0.1);
-//		wlf->plane = rot_vect2d(&wlf->plane, 0.1);
 		render(wlf);
 	}
 	if (key == KEY_ESC)

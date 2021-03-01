@@ -1,6 +1,14 @@
-//
-// Created by Ivan on 05/03/2020.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vect2d.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: odrinkwa <odrinkwa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/22 13:28:43 by lshellie          #+#    #+#             */
+/*   Updated: 2020/02/29 15:50:00 by odrinkwa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "wolf3d.h"
 
@@ -31,13 +39,13 @@ double		len_vect2d(t_vect2d *a)
 	return (sqrt(len));
 }
 
-void	scale_vect2d(double scale, t_vect2d *a)
+void		scale_vect2d(double scale, t_vect2d *a)
 {
 	a->x *= scale;
 	a->y *= scale;
 }
 
-void	norm_vect2d(t_vect2d *a)
+void		norm_vect2d(t_vect2d *a)
 {
 	double		len;
 

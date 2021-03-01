@@ -1,33 +1,20 @@
-//
-// Created by Suzette Soraka on 1/27/21.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ssoraka <ssoraka@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/07 14:28:14 by ssoraka           #+#    #+#             */
+/*   Updated: 2019/04/16 18:47:16 by ssoraka          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/wolf3d.h"
 
 #define EMPTY 0
 #define OUT -1
 #define MIN_MAP_SIZE 3
-
-//отладочная функция
-void	print_map(t_map *map)
-{
-	int y;
-	int x;
-
-	printf("width = %d, height = %d\n", map->width, map->heigth);
-	y = 0;
-	while (y < map->heigth)
-	{
-		x = 0;
-		while (x < map->width)
-		{
-			printf("%d ", map->map[y][x]);
-			x++;
-		}
-		printf("\n");
-		y++;
-	}
-}
 
 void	del(void *content, size_t ivan)
 {
@@ -37,9 +24,9 @@ void	del(void *content, size_t ivan)
 
 int		read_file_to_lists(int fd, int *height, int *width, t_list *begin)
 {
-	char *str;
-	t_list *tmp;
-	t_list *new;
+	char	*str;
+	t_list	*tmp;
+	t_list	*new;
 
 	begin->next = NULL;
 	tmp = begin;
@@ -63,21 +50,21 @@ int		read_file_to_lists(int fd, int *height, int *width, t_list *begin)
 
 int		create_map_from_list(t_map *map, t_list *lst)
 {
-	char *ptr;
-	int **line;
-	int i;
+	char	*ptr;
+	int		**line;
+	int		i;
 
-	if (!(map->map = ft_memalloc((map->heigth + 1) * sizeof(int *))))
+	if (!(map->map = (int **)ft_memalloc((map->heigth + 1) * sizeof(int *))))
 		return (ERR);
 	line = map->map;
 	while (lst)
 	{
-		if (!(*line = malloc(map->width * sizeof(int))))
+		if (!(*line = (int *)malloc(map->width * sizeof(int))))
 			return (ERR);
 		ft_memset(*line, OUT, map->width * sizeof(int));
 		ptr = lst->content;
 		i = -1;
-		while(ptr[++i])
+		while (ptr[++i])
 			(*line)[i] = ptr[i] - '0';
 		line++;
 		lst = lst->next;
@@ -87,14 +74,14 @@ int		create_map_from_list(t_map *map, t_list *lst)
 
 int		file_to_map(char *file, t_map *map)
 {
-	int fd;
-	t_list lst[1];
+	int		fd;
+	t_list	lst[1];
 
 	if ((fd = open(file, O_RDWR)) < 0)
 		return (ERR);
-	if (!(read_file_to_lists(fd, &map->heigth, &map->width, lst)) //читаем в список строк
+	if (!(read_file_to_lists(fd, &map->heigth, &map->width, lst))
 	|| map->heigth < MIN_MAP_SIZE || map->width < MIN_MAP_SIZE
-	|| !(create_map_from_list(map, lst->next))) //создаем массив интов для прямоугольной карты
+	|| !(create_map_from_list(map, lst->next)))
 	{
 		close(fd);
 		ft_lstdel(&lst->next, &del);
@@ -102,8 +89,7 @@ int		file_to_map(char *file, t_map *map)
 	}
 	close(fd);
 	ft_lstdel(&lst->next, &del);
-	if (!(validate_map(map)) || !map->has_person) //валидируем контур
+	if (!(validate_map(map)) || !map->has_person)
 		return (ERR);
-	print_map(map);
 	return (NO_ERR);
 }
