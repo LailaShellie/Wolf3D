@@ -4,8 +4,6 @@
 
 #include "../includes/wolf3d.h"
 
-int a = 0;
-
 void        draw(t_wolf3d *wlf, t_ray *ray, int x,  double step)
 {
 	int 	y;
@@ -74,9 +72,6 @@ void		cast_ray(t_wolf3d *wlf, t_ray *ray)
 	ray->step_y = ray->dir.y >= 0 ? 1 : -1;
 	while (ray->hit == 0 && ray->map_x > 0 && ray->map_x < wlf->map.width - 1 && ray->map_y > 0 && ray->map_y < wlf->map.heigth - 1)
 	{
-//		if (a == W/2)
-//			printf("size_x=%lf size_y=%lf\n", side_x, side_y);
-
 		if (side_x < side_y)
 		{
 			side_x += ray->delta_x;
@@ -89,22 +84,13 @@ void		cast_ray(t_wolf3d *wlf, t_ray *ray)
 			ray->side = Y_SIDE;
 			ray->map_y += ray->step_y;
 		}
-//		ray->hit = worldMap[ray->map_y][ray->map_x];
 		ray->hit = wlf->map.map[ray->map_y][ray->map_x];
 	}
 	if (ray->hit == 0)
 		return ;
-	ray->hit = (ray->hit + 1) % TEX_NUM;
-//	if (a == W/2)
-//		printf("hit=%d\n", ray->hit);
+	ray->hit = (ray->hit + 1) % (TEX_NUM - 1);
 	draw_line(wlf, ray);
 }
-
-
-void		player_to_str(t_wolf3d *wlf){
-	printf("x=%lf, y=%lf, dir_x=%lf, dir_y=%lf, plane_x=%lf, plane_y=%lf\n", wlf->pos.x, wlf->pos.y, wlf->dir.x, wlf->dir.y, wlf->plane.x, wlf->plane.y);
-}
-
 
 void		render_floor(t_wolf3d *wlf) {
 	for(int y = 0; y < H / 2 ; y++) {
@@ -126,8 +112,8 @@ void		render_floor(t_wolf3d *wlf) {
 			int cellX = (int)(floorX);
 			int cellY = (int)(floorY);
 
-			int tx = (int)(wlf->text[0].width * (floorX - cellX)) & (wlf->text[0].width - 1);
-			int ty = (int)(wlf->text[0].height * (floorY - cellY)) & (wlf->text[0].height - 1);
+			int tx = (int)(wlf->text[4].width * (floorX - cellX)) & (wlf->text[4].width - 1);
+			int ty = (int)(wlf->text[4].height * (floorY - cellY)) & (wlf->text[4].height - 1);
 
 			floorX += floorStepX;
 			floorY += floorStepY;
@@ -136,12 +122,12 @@ void		render_floor(t_wolf3d *wlf) {
 //			int ceilingTexture = 6;
 			int color;
 
-			color = wlf->text[2].buf[wlf->text[2].width * ty + tx];
-			color = (color >> 1) & 8355711; // make a bit darker
+			color = wlf->text[4].buf[wlf->text[4].width * ty + tx];
+//			color = (color >> 1) & 8355711; // make a bit darker
 			wlf->img->data[y * W + x] = color;
 
-			color = wlf->text[3].buf[wlf->text[3].width * ty + tx];
-			color = (color >> 1) & 8355711; // make a bit darker
+			color = wlf->text[2].buf[wlf->text[2].width * ty + tx];
+//			color = (color >> 1) & 8355711; // make a bit darker
 			wlf->img->data[(H - y - 1) * W + x] = color;
 		}
 	}
@@ -150,7 +136,6 @@ void		render_floor(t_wolf3d *wlf) {
 
 void		render(t_wolf3d *wlf)
 {
-	a =0;
 	t_ray	ray;
 	double 	delta;
 
@@ -168,10 +153,7 @@ void		render(t_wolf3d *wlf)
 		ray.delta_x = fabs(1 / ray.dir.x);
 		ray.delta_y = fabs(1 / ray.dir.y);
 		cast_ray(wlf , &ray);
-		a++;
 	}
-
 	mlx_put_image_to_window(wlf->mlx_ptr, wlf->win_ptr, wlf->img->img_ptr, 0, 0);
-	player_to_str(wlf);
 }
 

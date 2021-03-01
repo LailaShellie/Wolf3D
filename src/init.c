@@ -58,6 +58,8 @@ int 		init_textures(t_wolf3d *wlf)
 		return (ERR);
 	if (ERR == init_one_text(wlf, 3, TEXT4))
 		return (ERR);
+	if (ERR == init_one_text(wlf, 4, TEXT5))
+		return (ERR);
 	return (NO_ERR);
 }
 
