@@ -59,7 +59,7 @@ int		init_one_text(t_wolf3d *wlf, t_texture *text, char *file)
 
 int		init_textures(t_wolf3d *wlf)
 {
-	if (!(wlf->text = ft_memalloc(sizeof(t_texture) * TEX_NUM)))
+	if (!(wlf->text = ft_memalloc(sizeof(t_texture) * (TEX_NUM + 4))))
 		return (ERR);
 	if (ERR == init_one_text(wlf, wlf->text, TEXT1))
 		return (ERR);
@@ -70,6 +70,14 @@ int		init_textures(t_wolf3d *wlf)
 	if (ERR == init_one_text(wlf, wlf->text + 3, TEXT4))
 		return (ERR);
 	if (ERR == init_one_text(wlf, wlf->text + 4, TEXT5))
+		return (ERR);
+	if (ERR == init_one_text(wlf, wlf->text + 5, TEXT11))
+		return (ERR);
+	if (ERR == init_one_text(wlf, wlf->text + 6, TEXT21))
+		return (ERR);
+	if (ERR == init_one_text(wlf, wlf->text + 7, TEXT12))
+		return (ERR);
+	if (ERR == init_one_text(wlf, wlf->text + 8, TEXT22))
 		return (ERR);
 	return (NO_ERR);
 }

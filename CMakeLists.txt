@@ -96,4 +96,4 @@ add_executable(Wolf3D
         mlx/mlx_xpm.c
         src/init_mlx.c
         src/main.c
-        src/vect2d.c src/map.c src/validation.c)
+        src/vect2d.c src/map.c src/validation.c src/render2.c)

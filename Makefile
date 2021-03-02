@@ -12,7 +12,7 @@
 
 GCC = gcc -Wall -Wextra -Werror
 NAME = wolf3d
-SRC = init.c hooks.c main.c vect2d.c render.c map.c validation.c
+SRC = init.c hooks.c main.c vect2d.c render.c render2.c map.c validation.c
 
 OBJ_DIR = ./objects
 SRC_DIR = ./src

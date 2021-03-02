@@ -31,10 +31,14 @@
 # define TEX_NUM 5
 
 # define TEXT1 "textures/bluestone.xpm"
-# define TEXT2 "textures/purplestone.xpm"
-# define TEXT3 "textures/redbrick.xpm"
+# define TEXT2 "textures/redbrick.xpm"
+# define TEXT3 "textures/purplestone.xpm"
 # define TEXT4 "textures/wood.xpm"
 # define TEXT5 "textures/Ivan.xpm"
+# define TEXT11 "textures/greystone.xpm"
+# define TEXT12 "textures/colorstone.xpm"
+# define TEXT21 "textures/eagle.xpm"
+# define TEXT22 "textures/eagle.xpm"
 
 # define X_SIDE 0
 # define Y_SIDE 1
@@ -115,6 +119,9 @@ void					scale_vect2d(double scale, t_vect2d *a);
 void					init(t_wolf3d *wlf);
 void					hooks(t_wolf3d *wlf);
 
+int						get_texture_id(int hit, int side, int step_x,
+							int step_y);
+void					cast_ray(t_wolf3d *wlf, t_ray *ray);
 void					render(t_wolf3d *wlf);
 
 int						file_to_map(char *file, t_map *map);
