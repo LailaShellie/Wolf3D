@@ -1,3 +1,17 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: rfork <rfork@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2020/01/05 17:09:20 by rfork             #+#    #+#              #
+#    Updated: 2020/01/13 20:23:37 by dovran           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+GCC = gcc -Wall -Wextra -Werror
+NAME = wolf3d
 SRC = init.c hooks.c main.c vect2d.c render.c map.c validation.c
 
 OBJ_DIR = ./objects
@@ -9,28 +23,33 @@ OBJ = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
 HDR = ./includes/wolf3d.h ./includes/keys.h
 LIB = libft/libft.a
 MLX = mlx/lmlx.a
-NAME = wolf3d
+
+.PHONY: clean fclean re
 
 all: libs $(NAME)
 	./$(NAME) text.txt
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HDR)
-	@gcc -g3  -I $(HDR_DIR) -I $(LIBFT_HDR_DIR) -I $(MLX_HDR_DIR) -o $@ -c $<
+	@GCC -g3  -I $(HDR_DIR) -I $(LIBFT_HDR_DIR) -I $(MLX_HDR_DIR) -o $@ -c $<
 
 libs:
-	@make -C ./libft
+	@make -C $(LIBFT_HDR_DIR)
+	@make -C $(MLX_HDR_DIR)
 
 clean:
-	@make clean -C ./libft
+	@make clean -C $(LIBFT_HDR_DIR)
 	@rm -rf $(OBJ)
 	@rm -rf $(OBJ_DIR)
+
 fclean: clean
-	@make fclean -C ./libft
+	@make fclean -C $(LIBFT_HDR_DIR)
+	@make clean -C $(MLX_HDR_DIR)
 	@rm -rf $(NAME)
+
 re: fclean all
 
 $(NAME): $(OBJ_DIR) $(OBJ)
-	@gcc -Wall -Wextra -Werror -g3 -o $(NAME) -I $(HDR_DIR) -I $(LIBFT_HDR_DIR) -I $(MLX_HDR_DIR) $(LIB) $(VAL) $(OBJ) -L mlx -lmlx -framework OpenGL -framework AppKit
+	@GCC -g3 -o $(NAME) -I $(HDR_DIR) -I $(LIBFT_HDR_DIR) -I $(MLX_HDR_DIR) $(LIB) $(VAL) $(OBJ) -L mlx -lmlx -framework OpenGL -framework AppKit
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
