@@ -57,7 +57,7 @@ int		validate_map(t_map *map)
 		{
 			if (!valid_position(map, y, x))
 				return (ERR);
-			if (ptr != EMPTY)
+			if (ptr[y][x] != EMPTY)
 				continue;
 			if (x == 0 || x == map->width - 1 || y == 0 || y == map->heigth - 1)
 				return (ERR);

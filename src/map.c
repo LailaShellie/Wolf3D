@@ -65,7 +65,7 @@ int		create_map_from_list(t_map *map, t_list *lst)
 		ptr = lst->content;
 		i = -1;
 		while (ptr[++i])
-			(*line)[i] = ptr[i] - '0';
+			(*line)[i] = (ptr[i] == ' ') ? -1 : ptr[i] - '0';
 		line++;
 		lst = lst->next;
 	}
